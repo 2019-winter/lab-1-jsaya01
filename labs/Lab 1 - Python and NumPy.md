@@ -46,46 +46,74 @@ For the following exercises please read the Python appendix in the Marsland text
 ## Exercise 1
 
 ```python
-# YOUR SOLUTION HERE
-#a=1000
-print('this is my answer',a+1) 
+import numpy as np
+arr = np.ones((6,4), int)*2
+arr
 ```
 
 ## Exercise 2
 
 ```python
-# YOUR SOLUTION HERE
-a=2000
+arr2 = np.ones((6,4), int)
+np.fill_diagonal(arr2, 3)
+arr2
 ```
 
 ## Exercise 3
 
-```python
-# YOUR SOLUTION HERE
+```
+You can multiply them together using * and this just preforms multiplicaiton on each pair of corresponding elements. However when using "dot" this attempts to preform matrix multiplication and because they are the same shape this will fail. 
 ```
 
 ## Exercise 4
 
 ```python
-# YOUR SOLUTION HERE
+np.dot(arr, arr2.transpose())
+
+np.dot(arr.transpose(), arr2)
 ```
+
+The results are different because in both cases the inner dimensions will fade away while the outer dimentions will become the dimensions of the new matrix. For example if you are multiplying a 5x2 and a 2x5 matrix the resulting matrix will be 5x5. 
+
 
 ## Exercise 5
 
 ```python
-# YOUR SOLUTION HERE
+def printSomething():
+    print("here is something that is going to be printed")
+    
+printSomething()
 ```
 
 ## Exercise 6
 
 ```python
-# YOUR SOLUTION HERE
+def randomArrays():
+    for i in range(10):
+        array = np.random.rand(100)
+        print(np.mean(array))
+        print(np.sum(array))
+
+randomArrays()
 ```
 
 ## Exercise 7
 
 ```python
-# YOUR SOLUTION HERE
+def countOnesLoop(a):
+    num_ones = 0
+    for i in a:
+        if i == 1:
+            num_ones += 1
+    return num_ones
+
+def countOnesWhere(a):
+    x = np.array(a)
+    return len(np.where(x == 1)[0])
+
+a = [1, 2, 3, 2, 1, 2, 3, 5, 1, 1, 1, 5]
+countOnesLoop(a)
+countOnesWhere(a)
 ```
 
 ## Excercises 8-???
@@ -96,28 +124,43 @@ While the Marsland book avoids using another popular package called Pandas, we w
 Repeat exercise A.1 from Marsland, but create a Pandas DataFrame instead of a NumPy array.
 
 ```python
-# YOUR SOLUTION HERE
+import pandas as pd
+arr = pd.DataFrame(np.ones((6,4), int)*2)
+arr
 ```
 
 ## Exercise 9
 Repeat exercise A.2 using a DataFrame instead.
 
 ```python
-# YOUR SOLUTION HERE
+arr2 = np.ones((6, 4), int)
+np.fill_diagonal(arr2, 3)
+arr3 = pd.DataFrame(arr2)
+arr3
 ```
 
 ## Exercise 10
 Repeat exercise A.3 using DataFrames instead.
 
 ```python
-# YOUR SOLUTION HERE
+arr * arr2
+
+np.dot(arr, arr2)
 ```
+
+The same error occurs for the same reason that is stated in ex3.
+
 
 ## Exercise 11
 Repeat exercise A.7 using a dataframe.
 
 ```python
-# YOUR SOLUTION HERE
+def countOnesWhere(a):
+    x = pd.DataFrame(a)
+    return len(x.where(x == 1).dropna())
+
+a = [1, 2, 3, 2, 1, 2, 3, 5, 1, 1, 1, 5]
+countOnesWhere(a)
 ```
 
 ## Exercises 12-14
@@ -137,7 +180,7 @@ Notice how we have nice headers and mixed datatypes? That is one of the reasons 
 How do you select the ``name`` column without using .iloc?
 
 ```python
-## YOUR SOLUTION HERE
+titanic_df["name"]
 ```
 
 ## Exercise 13
@@ -145,14 +188,16 @@ After setting the index to ``sex``, how do you select all passengers that are ``
 
 ```python
 ## YOUR SOLUTION HERE
-titanic_df.set_index('sex',inplace=True)
+# titanic_df.set_index("sex",inplace=True)
+titanic_df.loc['female']
+titanic_df.loc['female'].size
 ```
 
 ## Exercise 14
 How do you reset the index?
 
 ```python
-## YOUR SOLUTION HERE
+titanic_df.reset_index()
 ```
 
 ```python
